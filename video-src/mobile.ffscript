@@ -1,0 +1,51 @@
+[0:v]format=yuv420p[base];
+[1:v]scale=610:343,format=rgba,split=2[football_intro][football_final];
+[2:v]scale=500:281,format=rgba,split=2[doc_intro][doc_concepts];
+[3:v]scale=500:281,format=rgba[legends];
+[base][football_intro]overlay=x=55:y=715:enable='between(t,0,3.9)'[v1];
+[v1][doc_intro]overlay=x=170:y=935:enable='between(t,0,3.9)'[v2];
+[v2][doc_concepts]overlay=x=110:y=630:enable='between(t,12,15.9)'[v3];
+[v3][legends]overlay=x=110:y=920:enable='between(t,12,15.9)'[v4];
+[v4][football_final]overlay=x=55:y=690:enable='between(t,16,19.9)'[v5];
+[v5]drawbox=x=0:y=0:w=720:h=1280:color=0x101114@0.76:t=fill:enable='between(t,0,3.9)',
+drawbox=x=45:y=70:w=56:h=56:color=0xffd83d:t=fill:enable='between(t,0,3.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='T':fontsize=36:fontcolor=0x101114:x=63:y=80:enable='between(t,0,3.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='THUMBFORGE':fontsize=25:fontcolor=white:x=120:y=84:enable='between(t,0,3.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='A better thumbnail':fontsize=51:fontcolor=white:x=45:y=240:enable='between(t,0,3.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='starts with the':fontsize=51:fontcolor=white:x=45:y=305:enable='between(t,0,3.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='actual video.':fontsize=51:fontcolor=0xffd83d:x=45:y=370:enable='between(t,0,3.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arial.ttf':text='Context first. Click second.':fontsize=25:fontcolor=white:x=48:y=475:enable='between(t,0,3.9)',
+drawbox=x=0:y=0:w=720:h=1280:color=0xf5f6f1:t=fill:enable='between(t,4,11.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='01  SEND THE SOURCE':fontsize=20:fontcolor=0x2357ff:x=45:y=70:enable='between(t,4,7.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='Drop in your':fontsize=51:fontcolor=0x101114:x=45:y=145:enable='between(t,4,7.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='video link or':fontsize=51:fontcolor=0x101114:x=45:y=210:enable='between(t,4,7.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='paste the script.':fontsize=51:fontcolor=0x101114:x=45:y=275:enable='between(t,4,7.9)',
+drawbox=x=45:y=450:w=630:h=430:color=white:t=fill:enable='between(t,4,7.9)',
+drawbox=x=45:y=450:w=630:h=430:color=0x101114:t=3:enable='between(t,4,7.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arial.ttf':text='youtube.com/watch':fontsize=24:fontcolor=0x626773:x=80:y=500:enable='between(t,4,7.9)',
+drawbox=x=80:y=590:w=500:h=14:color=0xd9ddd4:t=fill:enable='between(t,4,7.9)',
+drawbox=x=80:y=645:w=550:h=14:color=0xd9ddd4:t=fill:enable='between(t,4,7.9)',
+drawbox=x=80:y=700:w=430:h=14:color=0xd9ddd4:t=fill:enable='between(t,4,7.9)',
+drawbox=x=80:y=755:w=520:h=14:color=0xd9ddd4:t=fill:enable='between(t,4,7.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='02  WE FIND THE CLICK':fontsize=20:fontcolor=0xf04438:x=45:y=70:enable='between(t,8,11.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='Hook locked.':fontsize=51:fontcolor=0x101114:x=45:y=145:enable='between(t,8,11.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='Cast locked.':fontsize=51:fontcolor=0x101114:x=45:y=210:enable='between(t,8,11.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='No random faces.':fontsize=51:fontcolor=0x101114:x=45:y=275:enable='between(t,8,11.9)',
+drawbox=x=45:y=430:w=630:h=155:color=0xffd83d:t=fill:enable='between(t,8,11.9)',
+drawbox=x=45:y=620:w=630:h=155:color=0xe8f4ff:t=fill:enable='between(t,8,11.9)',
+drawbox=x=45:y=810:w=630:h=155:color=0x101114:t=fill:enable='between(t,8,11.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='THE HOOK  /  Reason to click':fontsize=25:fontcolor=0x101114:x=80:y=485:enable='between(t,8,11.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='THE CAST  /  Correct people':fontsize=25:fontcolor=0x101114:x=80:y=675:enable='between(t,8,11.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='THE VIBE  /  Built for the niche':fontsize=25:fontcolor=white:x=80:y=865:enable='between(t,8,11.9)',
+drawbox=x=0:y=0:w=720:h=1280:color=0x101114@0.27:t=fill:enable='between(t,12,15.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='03  TWO REVIEWED CONCEPTS':fontsize=20:fontcolor=0xffd83d:x=45:y=65:enable='between(t,12,15.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='Selected.':fontsize=51:fontcolor=white:x=45:y=145:enable='between(t,12,15.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='Not sprayed.':fontsize=51:fontcolor=white:x=45:y=210:enable='between(t,12,15.9)',
+drawbox=x=0:y=0:w=720:h=1280:color=0x101114@0.40:t=fill:enable='between(t,16,19.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='READY FOR THE FEED':fontsize=21:fontcolor=0xffd83d:x=45:y=75:enable='between(t,16,19.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='Thumbnails that':fontsize=50:fontcolor=white:x=45:y=170:enable='between(t,16,19.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='understand':fontsize=50:fontcolor=white:x=45:y=235:enable='between(t,16,19.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='the video.':fontsize=50:fontcolor=white:x=45:y=300:enable='between(t,16,19.9)',
+drawbox=x=45:y=460:w=300:h=68:color=0xf04438:t=fill:enable='between(t,16,19.9)',
+drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='THUMBFORGE':fontsize=26:fontcolor=white:x=78:y=480:enable='between(t,16,19.9)',
+fade=t=in:st=0:d=0.35,fade=t=out:st=19.55:d=0.45[out]

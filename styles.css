@@ -243,6 +243,27 @@ h3 {
   font-weight: 850;
 }
 
+.process-film-section {
+  padding-bottom: 30px;
+}
+
+.process-film {
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  background: #aeb2ad;
+  box-shadow: 10px 10px 0 var(--ink);
+}
+
+.process-film video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.process-film-mobile {
+  display: none !important;
+}
+
 .work-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -585,5 +606,13 @@ textarea {
   .difference-grid article:nth-child(2),
   .faq-grid details:nth-child(odd) {
     border-right: 0;
+  }
+
+  .process-film-wide {
+    display: none !important;
+  }
+
+  .process-film-mobile {
+    display: block !important;
   }
 }

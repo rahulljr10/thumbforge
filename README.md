@@ -27,3 +27,11 @@ Then visit `http://127.0.0.1:4173`.
 The site is static and can be hosted with GitHub Pages. The checkout and form
 currently use founder-stage placeholders and must be connected before accepting
 payments.
+
+## Process Videos
+
+- Desktop/web: `assets/video/thumbforge-process-wide.mp4` at 1280x720
+- Mobile: `assets/video/thumbforge-process-mobile.mp4` at 720x1280
+
+Both are silent, looping H.264 MP4 files optimized for inline web playback.
+Their editable FFmpeg filter scripts are stored in `video-src`.
