@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Submit Your Thumbnail Brief - ThumbForge</title>
+    <meta
+      name="description"
+      content="Submit your video, cast, hook, and creative direction to ThumbForge."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="ThumbForge home">
+        <span class="brand-mark">T</span>
+        <span>ThumbForge</span>
+      </a>
+      <a class="nav-cta" href="index.html#pricing">Founder Plan</a>
+    </header>
+
+    <main>
+      <section class="form-hero">
+        <div>
+          <p class="eyebrow">Member brief</p>
+          <h1>Give us the story, not just the title.</h1>
+          <p>
+            We use this brief to understand the real hook, lock the correct cast,
+            and avoid generic or misleading concepts.
+          </p>
+        </div>
+      </section>
+
+      <section class="brief-layout">
+        <form class="brief-form" action="mailto:orders@example.com" method="post" enctype="text/plain">
+          <div class="field-grid">
+            <label>
+              Your name
+              <input name="name" type="text" placeholder="Your name" required />
+            </label>
+            <label>
+              Membership email
+              <input name="email" type="email" placeholder="you@channel.com" required />
+            </label>
+          </div>
+          <label>
+            Video link
+            <input name="video_link" type="url" placeholder="https://youtube.com/..." />
+          </label>
+          <label>
+            Video script, transcript, or detailed idea
+            <textarea
+              name="script"
+              rows="9"
+              placeholder="Paste the source here. If the video link is public, you can instead summarize anything that is not obvious from the video."
+            ></textarea>
+          </label>
+          <div class="field-grid">
+            <label>
+              Video niche
+              <select name="niche" required>
+                <option value="">Choose one</option>
+                <option>Creator / challenge</option>
+                <option>Football / sports</option>
+                <option>Podcast</option>
+                <option>Business / finance</option>
+                <option>Crime / documentary</option>
+                <option>Education</option>
+                <option>Gaming</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label>
+              Concepts requested
+              <select name="concept_count" required>
+                <option value="2">2 concepts - 2 credits</option>
+                <option value="1">1 concept - 1 credit</option>
+                <option value="3">3 concepts - 3 credits</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            The core promise
+            <input
+              name="core_promise"
+              type="text"
+              placeholder="What should the viewer expect or desperately want to know?"
+              required
+            />
+          </label>
+          <div class="field-grid">
+            <label>
+              People allowed in the thumbnail
+              <textarea name="allowed_people" rows="4" placeholder="Names and roles"></textarea>
+            </label>
+            <label>
+              People or elements to exclude
+              <textarea name="excluded_people" rows="4" placeholder="No unrelated creators, logos, text..."></textarea>
+            </label>
+          </div>
+          <label>
+            Reference thumbnail or channel link
+            <input name="reference" type="url" placeholder="A visual reference, not something to copy" />
+          </label>
+          <label>
+            What do you like about the reference?
+            <textarea
+              name="reference_notes"
+              rows="4"
+              placeholder="Composition, color, emotion, simplicity, lighting, scale..."
+            ></textarea>
+          </label>
+          <label>
+            Additional direction
+            <textarea
+              name="direction"
+              rows="4"
+              placeholder="Desired emotion, text ideas, brand colors, previous winners, or anything else."
+            ></textarea>
+          </label>
+          <button class="button primary full" type="submit">Submit Member Brief</button>
+          <p class="fine-print">
+            Temporary founder workflow: this opens your email app. The live form
+            endpoint and member credit balance will be connected before taking payments.
+          </p>
+        </form>
+
+        <aside class="brief-aside">
+          <p class="eyebrow">Credit check</p>
+          <h2>What happens next</h2>
+          <ul>
+            <li>We confirm the brief and available credits</li>
+            <li>Only delivered concepts use credits</li>
+            <li>Delivery is usually 24-48 hours</li>
+            <li>One revision is included per brief</li>
+            <li>Final files are 1280x720 PNG or JPG</li>
+          </ul>
+        </aside>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
