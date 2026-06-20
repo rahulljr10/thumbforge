@@ -938,3 +938,17 @@ textarea {
     margin: -20px -20px 20px;
   }
 }
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
