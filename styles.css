@@ -1463,3 +1463,59 @@ h1, h2 {
     transform: translateY(0);
   }
 }
+
+/* Brand signature placements */
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--wine-deep);
+  font-family: "Sora", "Manrope", sans-serif;
+  font-weight: 800;
+}
+
+.footer-brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 9px rgba(72,8,29,.16));
+  transition: transform 260ms ease, filter 260ms ease;
+}
+
+.footer-brand:hover img {
+  filter: drop-shadow(0 9px 13px rgba(72,8,29,.24));
+  transform: translateY(-2px) rotate(2deg);
+}
+
+.difference-section::after,
+.topup-section::after,
+.final-cta::after {
+  position: absolute;
+  right: max(24px, calc((100vw - 1180px) / 2));
+  bottom: 18px;
+  width: clamp(96px, 11vw, 160px);
+  aspect-ratio: 1;
+  background: url("assets/brand/thumbforge-logo.png") center / contain no-repeat;
+  content: "";
+  opacity: .055;
+  pointer-events: none;
+}
+
+.topup-section,
+.final-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.final-cta::after {
+  opacity: .04;
+}
+
+@media (max-width: 560px) {
+  .difference-section::after,
+  .topup-section::after,
+  .final-cta::after {
+    right: 8px;
+    width: 82px;
+  }
+}
