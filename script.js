@@ -45,3 +45,30 @@ updateTopup();
 
 const requestType = document.querySelector("#requestType");
 if (requestType && query.get("request") === "topup") requestType.value = "top-up";
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (!reduceMotion) {
+  const revealTargets = document.querySelectorAll(
+    ".section-heading, .process-film, .work-card, .difference-grid article, .step, .pricing-copy, .mini-plan, .membership-card, .topup-calculator, .comparison-table-wrap, .faq-grid, .brief-form, .brief-aside, .response-promise, .final-cta"
+  );
+
+  revealTargets.forEach((target, index) => {
+    target.classList.add("reveal-ready");
+    target.style.setProperty("--reveal-index", String(index % 4));
+  });
+
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8%", threshold: 0.08 }
+  );
+
+  revealTargets.forEach((target) => revealObserver.observe(target));
+
+}
