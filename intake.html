@@ -16,7 +16,7 @@
         <span class="brand-mark">T</span>
         <span>ThumbForge</span>
       </a>
-      <a class="nav-cta" href="index.html#pricing">Founder Plan</a>
+      <a class="nav-cta" href="pricing.html">Pricing</a>
     </header>
 
     <main>
@@ -33,6 +33,15 @@
 
       <section class="brief-layout">
         <form class="brief-form" action="mailto:orders@example.com" method="post" enctype="text/plain">
+          <label>
+            Membership plan
+            <select name="membership_plan" id="membershipPlan" required>
+              <option value="">Choose one</option>
+              <option value="starter">Starter - 6 credits</option>
+              <option value="pro">Pro - 24 credits</option>
+              <option value="custom">Custom plan</option>
+            </select>
+          </label>
           <div class="field-grid">
             <label>
               Your name

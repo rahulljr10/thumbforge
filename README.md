@@ -4,13 +4,14 @@ ThumbForge is a context-aware YouTube thumbnail studio. Members submit a video
 link or script and receive original, human-reviewed thumbnail concepts built
 around the real hook, correct cast, and reason to click.
 
-## Founder Plan
+## Membership Plans
 
-- `$29/month`
-- Six delivery credits
-- One credit equals one finished thumbnail concept
-- One revision per video brief
-- Up to six unused credits roll into the next active billing month
+- Starter: `$29/month` for 6 delivery credits
+- Pro: `$69/month` for 24 delivery credits
+- Additional credits: `$3 each`
+- Custom: recommended within 24 hours based on volume and workflow
+
+One credit equals one finished thumbnail concept. One revision is included per video brief.
 
 ## Local Preview
 
