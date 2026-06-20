@@ -2,7 +2,7 @@
 
 ## Core Idea
 
-The mark shows a thumbnail frame with competing visual directions converging on a
+The mark shows competing visual directions converging on a
 single bold `T`. It represents ThumbForge's differentiator: understand the source,
 filter the possibilities, and choose one clear focal direction.
 
