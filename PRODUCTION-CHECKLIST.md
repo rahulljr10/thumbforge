@@ -1,4 +1,4 @@
-# ThumbForge Production Checklist
+# MakeViralThumb Production Checklist
 
 ## Required Before Customer Accounts
 
@@ -9,6 +9,8 @@
 - Create and promote the owner account to `admin`.
 - Test signup, email verification, sign in and password reset.
 - Test a brief with a private source file.
+- Test subject-image and reference-image uploads.
+- Confirm each new verified account receives exactly one free concept.
 - Upload concepts in `admin.html`.
 - Test selection, credit deduction, revision and download.
 

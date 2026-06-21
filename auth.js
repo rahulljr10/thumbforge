@@ -5,6 +5,9 @@ const signInForm = document.querySelector("#signInForm");
 const signUpForm = document.querySelector("#signUpForm");
 const next = new URLSearchParams(location.search).get("next") || "dashboard.html";
 const signupRequested = new URLSearchParams(location.search).get("mode") === "signup";
+const intendedPlan = ["starter", "pro"].includes(new URLSearchParams(location.search).get("plan"))
+  ? new URLSearchParams(location.search).get("plan")
+  : "free";
 const dashboardUrl = new URL("dashboard.html", location.href).href;
 const resetUrl = new URL("login.html?reset=1", location.href).href;
 
@@ -72,6 +75,7 @@ signUpForm.addEventListener("submit", async (event) => {
         channel_name: values.get("channel_name"),
         country_code: values.get("country_code"),
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        intended_plan: intendedPlan,
       },
     },
   });

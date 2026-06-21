@@ -1,6 +1,6 @@
 ﻿{
-  "name": "ThumbForge",
-  "short_name": "ThumbForge",
+  "name": "MakeViralThumb",
+  "short_name": "MakeViral",
   "description": "Context-aware YouTube thumbnail concepts built around the real video hook.",
   "start_url": "./index.html",
   "display": "standalone",

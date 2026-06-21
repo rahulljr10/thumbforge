@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sign in - ThumbForge</title>
-  <meta name="description" content="Sign in or create your ThumbForge account." />
+  <title>Sign in - MakeViralThumb</title>
+  <meta name="description" content="Sign in or create your MakeViralThumb account." />
   <meta name="theme-color" content="#7a1633" />
   <link rel="icon" href="assets/brand/favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="assets/brand/thumbforge-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="app.css?v=production-1" />
+  <link rel="stylesheet" href="app.css?v=brand-1" />
 </head>
 <body class="login-page">
   <main class="login-shell">
     <section class="login-visual">
-      <a class="login-brand" href="index.html"><img src="assets/brand/thumbforge-logo.png" alt="" /><span>ThumbForge</span></a>
+      <a class="login-brand" href="index.html"><img src="assets/brand/thumbforge-logo.png" alt="" /><span class="brand-wordmark"><span>Make</span><em>Viral</em><span>Thumb</span></span></a>
       <div class="login-message">
         <p class="app-eyebrow">Creator workspace</p>
         <h1>Turn the real video into the reason to click.</h1>
@@ -36,7 +36,7 @@
         <div id="authNotice" class="auth-notice" hidden></div>
         <form id="signInForm">
           <p class="app-eyebrow">Welcome back</p>
-          <h2>Sign in to ThumbForge</h2>
+          <h2>Sign in to MakeViralThumb</h2>
           <label>Email address<input name="email" type="email" autocomplete="email" required /></label>
           <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
           <button class="app-button primary full" type="submit">Sign in</button>
@@ -45,6 +45,7 @@
         <form id="signUpForm" hidden>
           <p class="app-eyebrow">New account</p>
           <h2>Create your workspace</h2>
+          <div class="trial-callout"><strong>Your first concept is free.</strong><span>No card required. Upload your source and images, then review the finished result before choosing a plan.</span></div>
           <div class="auth-field-grid">
             <label>Your name<input name="full_name" autocomplete="name" required /></label>
             <label>Channel name<input name="channel_name" required /></label>
@@ -53,13 +54,13 @@
           <label>Email address<input name="email" type="email" autocomplete="email" required /></label>
           <label>Password<input name="password" type="password" minlength="8" autocomplete="new-password" required /></label>
           <label class="checkbox-label"><input name="terms" type="checkbox" required /><span>I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</span></label>
-          <button class="app-button primary full" type="submit">Create account</button>
+          <button class="app-button primary full" type="submit">Start Free Thumbnail</button>
         </form>
         <p class="auth-footnote">Secure account access powered by Supabase authentication.</p>
-        <a class="back-link" href="index.html">Back to ThumbForge</a>
+        <a class="back-link" href="index.html">Back to MakeViralThumb</a>
       </div>
     </section>
   </main>
-  <script type="module" src="auth.js?v=production-1"></script>
+  <script type="module" src="auth.js?v=brand-1"></script>
 </body>
 </html>

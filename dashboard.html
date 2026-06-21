@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Workspace - ThumbForge</title>
+  <title>Workspace - MakeViralThumb</title>
   <meta name="robots" content="noindex" />
   <meta name="theme-color" content="#7a1633" />
   <link rel="icon" href="assets/brand/favicon.ico" sizes="any" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="app.css?v=production-1" />
+  <link rel="stylesheet" href="app.css?v=brand-1" />
 </head>
 <body class="app-page">
   <div class="app-shell production-shell">
     <aside class="app-sidebar" id="appSidebar">
-      <a class="app-brand" href="index.html"><img src="assets/brand/thumbforge-64.png" alt="" /><span>ThumbForge</span></a>
+      <a class="app-brand" href="index.html"><img src="assets/brand/thumbforge-64.png" alt="" /><span class="brand-wordmark"><span>Make</span><em>Viral</em><span>Thumb</span></span></a>
       <nav class="app-nav" aria-label="Workspace navigation">
-        <button class="nav-item active" data-view="home" type="button"><span class="nav-icon">⌂</span>Overview</button>
-        <button class="nav-item" data-view="projects" type="button"><span class="nav-icon">▣</span>Projects <span class="nav-count" id="projectCount">0</span></button>
-        <button class="nav-item" data-view="brief" type="button"><span class="nav-icon">＋</span>New brief</button>
-        <button class="nav-item" data-view="billing" type="button"><span class="nav-icon">◇</span>Credits & billing</button>
-        <button class="nav-item" data-view="settings" type="button"><span class="nav-icon">⚙</span>Channel settings</button>
+        <button class="nav-item active" data-view="home" type="button"><span class="nav-icon">&#8962;</span>Overview</button>
+        <button class="nav-item" data-view="projects" type="button"><span class="nav-icon">&#9638;</span>Projects <span class="nav-count" id="projectCount">0</span></button>
+        <button class="nav-item" data-view="brief" type="button"><span class="nav-icon">+</span>New brief</button>
+        <button class="nav-item" data-view="billing" type="button"><span class="nav-icon">$</span>Credits & billing</button>
+        <button class="nav-item" data-view="settings" type="button"><span class="nav-icon">&#9881;</span>Channel settings</button>
       </nav>
       <div class="sidebar-plan">
         <div><span id="sidePlan">Account</span><strong><b id="sideCredits">0</b> credits available</strong></div>
@@ -32,11 +32,11 @@
     </aside>
     <main class="app-main">
       <header class="app-topbar">
-        <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation">☰</button>
+        <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation">&#9776;</button>
         <div><p id="viewEyebrow">Creator workspace</p><h1 id="viewTitle">Loading workspace</h1></div>
         <div class="topbar-actions">
-          <button class="icon-button" id="notificationButton" type="button" aria-label="Notifications">●<span class="notification-dot" hidden></span></button>
-          <button class="profile-button" data-view="settings" type="button"><span id="profileInitials">TF</span><div><strong id="profileName">ThumbForge member</strong><small id="profileChannel">Creator</small></div></button>
+          <button class="icon-button" id="notificationButton" type="button" aria-label="Notifications">&#9679;<span class="notification-dot" hidden></span></button>
+          <button class="profile-button" data-view="settings" type="button"><span id="profileInitials">MV</span><div><strong id="profileName">MakeViralThumb member</strong><small id="profileChannel">Creator</small></div></button>
         </div>
       </header>
       <section id="appContent" class="app-content" aria-live="polite"><div class="loading-state">Loading your workspace...</div></section>
@@ -44,6 +44,6 @@
   </div>
   <div id="appModal" class="app-modal" hidden></div>
   <div id="appToast" class="app-toast" role="status" hidden></div>
-  <script type="module" src="app.js?v=production-1"></script>
+  <script type="module" src="app.js?v=brand-1"></script>
 </body>
 </html>

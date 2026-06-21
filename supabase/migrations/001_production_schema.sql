@@ -34,6 +34,9 @@ create table public.profiles (
   exclusions text not null default '',
   delivery_alerts boolean not null default true,
   product_updates boolean not null default false,
+  intended_plan public.plan_type not null default 'free',
+  trial_granted_at timestamptz not null default now(),
+  trial_used_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -68,6 +71,16 @@ create table public.concepts (
   storage_path text not null,
   notes text,
   is_selected boolean not null default false,
+  created_at timestamptz not null default now()
+);
+
+create table public.project_assets (
+  id uuid primary key default gen_random_uuid(),
+  project_id uuid not null references public.projects(id) on delete cascade,
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  kind text not null check (kind in ('subject_image', 'reference_image')),
+  storage_path text not null,
+  original_name text not null,
   created_at timestamptz not null default now()
 );
 
@@ -124,6 +137,7 @@ create table public.contact_requests (
 
 create index projects_user_id_idx on public.projects(user_id, submitted_at desc);
 create index concepts_project_id_idx on public.concepts(project_id, created_at);
+create index project_assets_project_id_idx on public.project_assets(project_id, created_at);
 create index transactions_user_id_idx on public.credit_transactions(user_id, created_at desc);
 create index notifications_user_id_idx on public.notifications(user_id, created_at desc);
 
@@ -149,13 +163,24 @@ language plpgsql
 security definer set search_path = public
 as $$
 begin
-  insert into public.profiles (id, full_name, channel_name, country_code, timezone)
+  insert into public.profiles (id, full_name, channel_name, country_code, timezone, intended_plan)
   values (
     new.id,
     coalesce(new.raw_user_meta_data ->> 'full_name', ''),
     coalesce(new.raw_user_meta_data ->> 'channel_name', ''),
     upper(coalesce(new.raw_user_meta_data ->> 'country_code', '')),
-    coalesce(new.raw_user_meta_data ->> 'timezone', 'UTC')
+    coalesce(new.raw_user_meta_data ->> 'timezone', 'UTC'),
+    case
+      when coalesce(new.raw_user_meta_data ->> 'intended_plan', '') in ('starter', 'pro')
+        then (new.raw_user_meta_data ->> 'intended_plan')::public.plan_type
+      else 'free'::public.plan_type
+    end
+  );
+
+  insert into public.credit_transactions (
+    user_id, type, credit_delta, description
+  ) values (
+    new.id, 'adjustment', 1, 'Free first thumbnail trial'
   );
   return new;
 end;
@@ -325,6 +350,11 @@ begin
       -project_row.concepts_requested,
       'Thumbnail concepts delivered for review'
     );
+
+    update public.profiles
+    set trial_used_at = coalesce(trial_used_at, now())
+    where id = project_row.user_id
+      and plan = 'free';
   end if;
 
   update public.projects
@@ -421,6 +451,7 @@ $$;
 alter table public.profiles enable row level security;
 alter table public.projects enable row level security;
 alter table public.concepts enable row level security;
+alter table public.project_assets enable row level security;
 alter table public.revisions enable row level security;
 alter table public.credit_transactions enable row level security;
 alter table public.notifications enable row level security;
@@ -446,6 +477,19 @@ create policy "Members read own concepts" on public.concepts
 for select using (user_id = auth.uid());
 create policy "Admins manage concepts" on public.concepts
 for all using (public.is_admin()) with check (public.is_admin());
+create policy "Members read own project assets" on public.project_assets
+for select using (user_id = auth.uid());
+create policy "Members create own project assets" on public.project_assets
+for insert with check (
+  user_id = auth.uid()
+  and exists (
+    select 1 from public.projects
+    where projects.id = project_assets.project_id
+      and projects.user_id = auth.uid()
+  )
+);
+create policy "Admins manage project assets" on public.project_assets
+for all using (public.is_admin()) with check (public.is_admin());
 create policy "Members read own revisions" on public.revisions
 for select using (user_id = auth.uid());
 create policy "Admins manage revisions" on public.revisions
@@ -467,6 +511,7 @@ for all using (public.is_admin()) with check (public.is_admin());
 
 insert into storage.buckets (id, name, public)
 values ('brief-files', 'brief-files', false),
+       ('project-assets', 'project-assets', false),
        ('concepts', 'concepts', false)
 on conflict (id) do nothing;
 
@@ -488,6 +533,18 @@ using (
   bucket_id = 'concepts'
   and (storage.foldername(name))[1] = auth.uid()::text
 );
+create policy "Members upload own project assets"
+on storage.objects for insert to authenticated
+with check (
+  bucket_id = 'project-assets'
+  and (storage.foldername(name))[1] = auth.uid()::text
+);
+create policy "Members read own project assets"
+on storage.objects for select to authenticated
+using (
+  bucket_id = 'project-assets'
+  and (storage.foldername(name))[1] = auth.uid()::text
+);
 create policy "Admins manage brief files"
 on storage.objects for all to authenticated
 using (bucket_id = 'brief-files' and public.is_admin())
@@ -496,11 +553,16 @@ create policy "Admins manage concept files"
 on storage.objects for all to authenticated
 using (bucket_id = 'concepts' and public.is_admin())
 with check (bucket_id = 'concepts' and public.is_admin());
+create policy "Admins manage project asset files"
+on storage.objects for all to authenticated
+using (bucket_id = 'project-assets' and public.is_admin())
+with check (bucket_id = 'project-assets' and public.is_admin());
 
 grant usage on schema public to anon, authenticated;
 grant select, insert, update, delete on public.profiles,
   public.projects,
   public.concepts,
+  public.project_assets,
   public.revisions,
   public.credit_transactions,
   public.notifications,

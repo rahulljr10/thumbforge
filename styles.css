@@ -1722,3 +1722,35 @@ h1, h2 {
 }
 .gallery-rail{will-change:transform}
 @media (prefers-reduced-motion:reduce){.gallery-rail{animation:none!important}}
+.brand-wordmark{display:inline-flex;align-items:baseline;gap:0;font-family:"Sora",sans-serif;font-weight:800;letter-spacing:0;white-space:nowrap}
+.brand-wordmark em{position:relative;margin:0 2px;color:#a32349;font-style:normal;text-shadow:0 1px 0 rgba(255,255,255,.8)}
+.brand-wordmark em::after{position:absolute;top:1px;right:8%;left:8%;height:30%;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.55),transparent);content:"";pointer-events:none}
+.login-visual .brand-wordmark em,.featured-plan .brand-wordmark em{color:#f0a9bf;text-shadow:none}
+.discount-ribbon{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:-4px 0 18px;padding:8px 10px;border:1px solid rgba(122,22,51,.13);border-radius:5px;background:#fff5f7;color:var(--wine);font-size:11px;font-weight:800;text-transform:uppercase}
+.discount-ribbon strong{padding:4px 7px;border-radius:4px;background:var(--wine);color:#fff}
+.featured-plan .discount-ribbon{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.09);color:#f8dce5}
+.featured-plan .discount-ribbon strong{background:#fff;color:var(--wine-deep)}
+.price-line{display:flex;align-items:center;gap:12px}
+.price-line .membership-price{margin:0}
+.was-price{color:#9d8f94;font-size:18px;font-weight:800;text-decoration:line-through;text-decoration-thickness:2px}
+.featured-plan .was-price{color:rgba(255,255,255,.5)}
+.trial-note{margin:10px 0 16px;color:var(--muted);font-size:11px;text-align:center}
+.featured-plan .trial-note{color:rgba(255,255,255,.6)}
+.mini-plan{position:relative}
+.mini-off{position:absolute;top:12px;right:12px;padding:5px 7px;border-radius:4px;background:#f4dfe6;color:var(--wine);font-size:10px;font-weight:900;text-transform:uppercase}
+.mini-plan-pro .mini-off{background:rgba(255,255,255,.12);color:#f5c8d6}
+.mini-price del{margin-right:4px;color:#a7989d;font-size:.56em}
+.mini-plan-pro .mini-price del{color:rgba(255,255,255,.43)}
+@media(max-width:560px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .site-header{justify-content:flex-start;padding-right:92px}
+  .site-header .brand{min-width:0;gap:7px}
+  .site-header .brand-mark{width:34px;height:34px;flex-basis:34px}
+  .site-header .brand-wordmark{font-size:11px}
+  .site-header .nav-cta{position:absolute;right:8px;display:inline-flex!important;min-height:38px;padding:8px 10px;font-size:11px}
+  .hero,.hero-copy,.hero-text,.hero-actions,.trust-row{width:100%;max-width:100%;min-width:0}
+  .hero-actions{display:grid;grid-template-columns:1fr}
+  .hero-actions .button{width:100%;white-space:normal;text-align:center}
+  .trust-row{display:flex;flex-wrap:wrap}
+  .trust-row span{min-width:0}
+}

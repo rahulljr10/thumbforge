@@ -1,16 +1,17 @@
-# ThumbForge Logo
+# MakeViralThumb Logo
 
 ## Core Idea
 
-The mark shows competing visual directions converging on a
-single bold `T`. It represents ThumbForge's differentiator: understand the source,
-filter the possibilities, and choose one clear focal direction.
+The glossy wine mark suggests a click path, rising attention, and a decisive
+visual focal point. The wordmark separates `Make`, `Viral`, and `Thumb`, with
+`Viral` carrying the wine-glass highlight.
 
 ## Usage
 
 - Primary mark: `assets/brand/thumbforge-logo.png`
 - Header and compact UI: `assets/brand/thumbforge-64.png`
 - App/social icon: `assets/brand/thumbforge-512.png`
+- Social preview: `assets/brand/makeviralthumb-social.png`
 - Apple touch icon: `assets/brand/thumbforge-192.png`
 - Browser favicon: `assets/brand/favicon.ico`
 

@@ -37,7 +37,7 @@ async function load() {
   queue.innerHTML = '<div class="loading-state">Loading production queue...</div>';
   const { data, error } = await supabase
     .from("projects")
-    .select("*, profiles!projects_user_id_fkey(id, full_name, channel_name, country_code, plan, monthly_credits, rollover_credits, topup_credits, renewal_at), concepts(*), revisions(*)")
+    .select("*, profiles!projects_user_id_fkey(id, full_name, channel_name, country_code, plan, intended_plan, monthly_credits, rollover_credits, topup_credits, renewal_at), concepts(*), revisions(*), project_assets(*)")
     .order("submitted_at", { ascending: false });
   if (error) {
     queue.innerHTML = `<div class="empty-state"><h3>Could not load queue</h3><p>${escapeHtml(error.message)}</p></div>`;
@@ -73,7 +73,7 @@ function render() {
     <article class="admin-project">
       <div class="admin-project-main">
         <div><span class="status ${project.status}">${project.status.replaceAll("_", " ")}</span><h2>${escapeHtml(project.title)}</h2><p>${escapeHtml(project.core_promise)}</p></div>
-        <div class="admin-customer"><strong>${escapeHtml(project.profiles?.full_name || "Member")}</strong><span>${escapeHtml(project.profiles?.channel_name || "")} · ${escapeHtml(project.profiles?.country_code || "")}</span></div>
+        <div class="admin-customer"><strong>${escapeHtml(project.profiles?.full_name || "Member")}</strong><span>${escapeHtml(project.profiles?.channel_name || "")} &middot; ${escapeHtml(project.profiles?.country_code || "")}</span></div>
       </div>
       <div class="admin-project-meta"><span>${project.niche}</span><span>${project.concepts_requested} concepts</span><span>${formatDate(project.submitted_at)}</span><span>${project.concepts?.length || 0} files uploaded</span></div>
       <div class="admin-project-actions"><button class="app-button secondary small open-admin-project" data-project="${project.id}" type="button">Open brief</button></div>
@@ -89,14 +89,22 @@ async function openProject(projectId) {
     const { data } = await supabase.storage.from("brief-files").createSignedUrl(project.source_file_path, 3600);
     sourceFileUrl = data?.signedUrl || "";
   }
+  const projectAssets = await Promise.all((project.project_assets || []).map(async (asset) => {
+    const { data } = await supabase.storage.from("project-assets").createSignedUrl(asset.storage_path, 3600);
+    return { ...asset, signedUrl: data?.signedUrl || "" };
+  }));
   modal.innerHTML = `
     <div class="modal-card admin-modal-card">
-      <div class="modal-head"><div><span class="status ${project.status}">${project.status.replaceAll("_", " ")}</span><h2 style="margin-top:8px">${escapeHtml(project.title)}</h2></div><button id="closeModal" type="button">×</button></div>
+      <div class="modal-head"><div><span class="status ${project.status}">${project.status.replaceAll("_", " ")}</span><h2 style="margin-top:8px">${escapeHtml(project.title)}</h2></div><button id="closeModal" type="button">&times;</button></div>
       <div class="modal-body">
         <div class="admin-brief-grid">
           <section><p class="app-eyebrow">Core promise</p><p>${escapeHtml(project.core_promise)}</p><p class="app-eyebrow">Source</p>${project.video_url ? `<p><a class="text-button" href="${escapeHtml(project.video_url)}" target="_blank" rel="noopener">Open video source</a></p>` : ""}${sourceFileUrl ? `<p><a class="text-button" href="${sourceFileUrl}" target="_blank" rel="noopener">Open private source file</a></p>` : ""}<div class="admin-script">${escapeHtml(project.script_text || "No pasted script.")}</div></section>
-          <aside><dl><dt>Creator</dt><dd>${escapeHtml(project.profiles?.full_name || "")}</dd><dt>Channel</dt><dd>${escapeHtml(project.profiles?.channel_name || "")}</dd><dt>Niche</dt><dd>${escapeHtml(project.niche)}</dd><dt>Allowed</dt><dd>${escapeHtml(project.allowed_people || "Not specified")}</dd><dt>Exclude</dt><dd>${escapeHtml(project.excluded_elements || "Not specified")}</dd><dt>Reference</dt><dd>${project.reference_url ? `<a href="${escapeHtml(project.reference_url)}" target="_blank">Open link</a>` : "None"}</dd></dl></aside>
+          <aside><dl><dt>Creator</dt><dd>${escapeHtml(project.profiles?.full_name || "")}</dd><dt>Channel</dt><dd>${escapeHtml(project.profiles?.channel_name || "")}</dd><dt>Niche</dt><dd>${escapeHtml(project.niche)}</dd><dt>Allowed</dt><dd>${escapeHtml(project.allowed_people || "Not specified")}</dd><dt>Exclude</dt><dd>${escapeHtml(project.excluded_elements || "Not specified")}</dd><dt>Reference</dt><dd>${project.reference_url ? `<a href="${escapeHtml(project.reference_url)}" target="_blank" rel="noopener">Open link</a>` : "None"}</dd><dt>Requested plan</dt><dd>${escapeHtml(project.profiles?.intended_plan || "free")}</dd></dl></aside>
         </div>
+        <section class="admin-assets">
+          <div class="section-row"><h3>Customer images and references</h3><span>${projectAssets.length} files</span></div>
+          ${projectAssets.length ? `<div class="admin-asset-grid">${projectAssets.map((asset) => `<a href="${asset.signedUrl}" target="_blank" rel="noopener"><img src="${asset.signedUrl}" alt="${escapeHtml(asset.original_name)}" /><span>${asset.kind === "subject_image" ? "Use in thumbnail" : "Visual reference"}<small>${escapeHtml(asset.original_name)}</small></span></a>`).join("")}</div>` : `<p class="muted-copy">No customer images were attached.</p>`}
+        </section>
         <section class="admin-delivery">
           <h3>Production and delivery</h3>
           <div class="admin-controls">

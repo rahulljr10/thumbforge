@@ -29,6 +29,6 @@ form.addEventListener("submit", async (event) => {
   button.textContent = "Send request";
   if (error) return show(error.message, "error");
   form.reset();
-  show("Request received. The ThumbForge team will respond within one business day.", "success");
+  show("Request received. The MakeViralThumb team will respond within one business day.", "success");
 });
 

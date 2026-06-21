@@ -1,4 +1,4 @@
-# ThumbForge vs ThumbnailCreator
+# MakeViralThumb vs ThumbnailCreator
 
 Research date: June 18, 2026
 
@@ -40,11 +40,11 @@ These are strategic openings, not claims that every generated result is poor.
 
 1. **Breadth can weaken focus.**
    The product now covers thumbnails, clips, scripts, titles, editing, analytics,
-   and integrations. ThumbForge can own one narrower promise: the best thumbnail
+   and integrations. MakeViralThumb can own one narrower promise: the best thumbnail
    concept for the actual story in the video.
 
 2. **Credits charge for attempts, not accepted outcomes.**
-   Users can spend credits regenerating weak or inaccurate concepts. ThumbForge
+   Users can spend credits regenerating weak or inaccurate concepts. MakeViralThumb
    can charge per completed video and include revisions.
 
 3. **Instant generation can miss editorial context.**
@@ -54,16 +54,16 @@ These are strategic openings, not claims that every generated result is poor.
 
 4. **Generic AI visuals are becoming easy to recognize.**
    Creator discussions regularly mention repetitive layouts, weak faces, and
-   thumbnails that restate the title instead of creating curiosity. ThumbForge
+   thumbnails that restate the title instead of creating curiosity. MakeViralThumb
    can sell art direction and human-reviewed selection rather than raw volume.
 
 5. **Their entry price is high for small and regional creators.**
-   A $29 recurring plan is a commitment. ThumbForge can offer one-off orders,
+   A $29 recurring plan is a commitment. MakeViralThumb can offer one-off orders,
    INR pricing, and no subscription.
 
 6. **Large marketing claims need proof.**
    Claims such as predicted CTR or large percentage improvements are hard for a
-   customer to validate before publishing. ThumbForge should use real before
+   customer to validate before publishing. MakeViralThumb should use real before
    and after examples, named customer channels, and measured YouTube Test &
    Compare results when available.
 
@@ -71,7 +71,7 @@ These are strategic openings, not claims that every generated result is poor.
 
 Do not compete as another instant AI thumbnail generator yet.
 
-Position ThumbForge as:
+Position MakeViralThumb as:
 
 > A thumbnail studio that reads your video before designing the click.
 
@@ -82,7 +82,7 @@ Supporting promise:
 
 This makes the comparison:
 
-| ThumbnailCreator | ThumbForge |
+| ThumbnailCreator | MakeViralThumb |
 | --- | --- |
 | Software subscription | Per-video creative service |
 | Generates many attempts | Delivers two selected concepts |
@@ -137,7 +137,7 @@ Avoid promising a fixed increase until enough controlled test data exists.
 
 4. **Three strategic directions before rendering**
    Offer curiosity, stakes, and transformation directions as short concepts.
-   The customer selects one or lets ThumbForge choose the strongest two.
+   The customer selects one or lets MakeViralThumb choose the strongest two.
 
 5. **Mobile preview**
    Deliver each design with a small YouTube-feed preview, not just a full-size

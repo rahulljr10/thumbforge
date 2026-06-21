@@ -1,6 +1,6 @@
-# ThumbForge
+# MakeViralThumb
 
-ThumbForge is a context-aware YouTube thumbnail studio. Members submit a video
+MakeViralThumb is a context-aware YouTube thumbnail studio. Members submit a video
 link or script and receive original, human-reviewed thumbnail concepts built
 around the real hook, correct cast, and reason to click.
 
@@ -8,6 +8,8 @@ around the real hook, correct cast, and reason to click.
 
 - Starter: `$29/month` for 6 delivery credits
 - Pro: `$69/month` for 24 delivery credits
+- Launch list prices: Starter `$39`, Pro `$99`
+- One free concept for every new account, no card required
 - Additional credits: `$3 each`
 - Custom: recommended within 24 hours based on volume and workflow
 
@@ -18,7 +20,7 @@ One credit equals one finished thumbnail concept. One revision is included per v
 - Static frontend on GitHub Pages
 - Supabase Auth for verified customer accounts
 - Supabase Postgres with row-level security
-- Private storage buckets for source files and delivered concepts
+- Private storage buckets for source files, customer images and delivered concepts
 - Customer workspace for briefs, review, revisions and downloads
 - Private production console at `admin.html`
 - One introductory credit on new accounts
@@ -44,8 +46,8 @@ Then visit `http://127.0.0.1:4173`.
    anonymous key. The anonymous key is designed to be public; never place the
    service-role key in browser code.
 4. In Supabase Auth URL Configuration, add:
-   - `https://rahulljr10.github.io/thumbforge/`
-   - `https://rahulljr10.github.io/thumbforge/dashboard.html`
+   - `https://makeviralthumb.com/`
+   - `https://makeviralthumb.com/dashboard.html`
    - the local preview URL while testing
 5. Create the owner account through the website, then promote it in the SQL
    editor:

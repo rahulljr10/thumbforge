@@ -15,6 +15,7 @@ let projects = [];
 let transactions = [];
 let notifications = [];
 let conceptUrls = new Map();
+let assetUrls = new Map();
 
 const views = {
   home: ["Creator workspace", "Your thumbnail workspace"],
@@ -60,8 +61,8 @@ function toast(message, type = "info") {
   toastElement.textContent = message;
   toastElement.className = `app-toast ${type}`;
   toastElement.hidden = false;
-  clearTimeout(window.thumbforgeToast);
-  window.thumbforgeToast = setTimeout(() => { toastElement.hidden = true; }, 3200);
+  clearTimeout(window.makeViralThumbToast);
+  window.makeViralThumbToast = setTimeout(() => { toastElement.hidden = true; }, 3200);
 }
 
 function setLoading(element, loading, label = "Please wait...") {
@@ -74,7 +75,7 @@ function setLoading(element, loading, label = "Please wait...") {
 async function loadWorkspace() {
   const [profileResult, projectsResult, transactionsResult, notificationsResult] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", session.user.id).single(),
-    supabase.from("projects").select("*, concepts(*)").order("submitted_at", { ascending: false }),
+    supabase.from("projects").select("*, concepts(*), project_assets(*)").order("submitted_at", { ascending: false }),
     supabase.from("credit_transactions").select("*").order("created_at", { ascending: false }).limit(30),
     supabase.from("notifications").select("*").order("created_at", { ascending: false }).limit(20),
   ]);
@@ -90,17 +91,23 @@ async function loadWorkspace() {
   notifications = notificationsResult.data;
 
   const paths = projects.flatMap((project) => project.concepts || []).map((concept) => concept.storage_path);
+  const assetPaths = projects.flatMap((project) => project.project_assets || []).map((asset) => asset.storage_path);
   await Promise.all(paths.map(async (path) => {
     try { conceptUrls.set(path, await signedConceptUrl(path)); }
     catch { conceptUrls.set(path, ""); }
+  }));
+  await Promise.all(assetPaths.map(async (path) => {
+    const { data } = await supabase.storage.from("project-assets").createSignedUrl(path, 3600);
+    assetUrls.set(path, data?.signedUrl || "");
   }));
 }
 
 function syncChrome() {
   const credits = availableCredits();
   const total = Math.max(credits, profile.plan === "pro" ? 24 : profile.plan === "starter" ? 6 : credits || 1);
+  const planLabel = profile.plan === "free" ? "Free trial" : `${profile.plan[0].toUpperCase()}${profile.plan.slice(1)} plan`;
   document.querySelector("#sideCredits").textContent = credits;
-  document.querySelector("#sidePlan").textContent = `${profile.plan[0].toUpperCase()}${profile.plan.slice(1)} plan`;
+  document.querySelector("#sidePlan").textContent = planLabel;
   document.querySelector("#sideCreditBar").style.width = `${Math.min(100, (credits / total) * 100)}%`;
   document.querySelector("#projectCount").textContent = projects.length;
   document.querySelector("#profileName").textContent = profile.full_name || session.user.email;
@@ -136,7 +143,7 @@ function projectCard(project) {
         <h3>${escapeHtml(project.title)}</h3>
         <p>${escapeHtml(project.core_promise)}</p>
         <div class="project-meta">
-          <span>${formatDate(project.submitted_at)} · ${project.concepts_requested} credits</span>
+          <span>${formatDate(project.submitted_at)} &middot; ${project.concepts_requested} credits</span>
           <button class="text-button open-project" data-project="${project.id}" type="button">Open project</button>
         </div>
       </div>
@@ -150,13 +157,13 @@ function renderHome() {
   return `
     <div class="view-header">
       <div><h2>Welcome back${profile.full_name ? `, ${escapeHtml(profile.full_name.split(" ")[0])}` : ""}</h2><p>Submit briefs, follow production and review finished concepts.</p></div>
-      <button class="app-button primary" data-view="brief" type="button">＋ New brief</button>
+      <button class="app-button primary" data-view="brief" type="button">+ New brief</button>
     </div>
     <div class="stat-grid">
-      <div class="stat"><span>Credits available</span><strong>${credits}</strong><small>${profile.monthly_credits} monthly · ${profile.topup_credits} top-up</small></div>
+      <div class="stat"><span>Credits available</span><strong>${credits}</strong><small>${profile.monthly_credits} monthly &middot; ${profile.topup_credits} top-up</small></div>
       <div class="stat"><span>Active briefs</span><strong>${active}</strong><small>${profile.plan === "pro" ? "2 active slots" : "1 active slot"}</small></div>
       <div class="stat"><span>Delivered</span><strong>${delivered}</strong><small>all time</small></div>
-      <div class="stat"><span>Plan</span><strong class="stat-plan">${profile.plan}</strong><small>${profile.renewal_at ? `Renews ${formatDate(profile.renewal_at)}` : "No active renewal"}</small></div>
+      <div class="stat"><span>Plan</span><strong class="stat-plan">${profile.plan === "free" ? "Free trial" : profile.plan}</strong><small>${profile.renewal_at ? `Renews ${formatDate(profile.renewal_at)}` : profile.plan === "free" ? "One concept, no card" : "No active renewal"}</small></div>
     </div>
     <div class="app-grid">
       <section class="app-section">
@@ -164,7 +171,7 @@ function renderHome() {
         ${projects.length ? `<div class="activity-list">${projects.slice(0, 5).map((project) => `
           <button class="activity-item open-project" data-project="${project.id}" type="button">
             <div class="activity-preview">${projectImage(project) ? `<img src="${projectImage(project)}" alt="" />` : `<img src="assets/brand/thumbforge-64.png" alt="" />`}</div>
-            <div><h4>${escapeHtml(project.title)}</h4><p>${project.niche} · ${formatDate(project.submitted_at)}</p></div>
+            <div><h4>${escapeHtml(project.title)}</h4><p>${project.niche} &middot; ${formatDate(project.submitted_at)}</p></div>
             ${statusBadge(project)}
           </button>`).join("")}</div>` : `
           <div class="empty-state compact"><h3>No briefs yet</h3><p>Start with a video link or script.</p><button class="app-button primary small" data-view="brief" type="button">Create first brief</button></div>`}
@@ -193,7 +200,7 @@ function renderProjects() {
   return `
     <div class="view-header">
       <div><h2>Projects</h2><p>Every brief from submission to final export.</p></div>
-      <button class="app-button primary" data-view="brief" type="button">＋ New brief</button>
+      <button class="app-button primary" data-view="brief" type="button">+ New brief</button>
     </div>
     <div class="project-toolbar">
       <input class="search-input" id="projectSearch" placeholder="Search projects" />
@@ -220,10 +227,17 @@ function renderBrief() {
         </div>
       </section>
       <section class="form-section">
+        <h3>Your images and visual references</h3><p>Upload the exact people, products, logos, screenshots, or visual references we should work with.</p>
+        <div class="form-grid">
+          <label class="form-field">People, product, or brand images<input name="subject_images" type="file" accept="image/png,image/jpeg,image/webp" multiple /><small>Up to 8 images, 15 MB each. Use clear, high-resolution files where possible.</small></label>
+          <label class="form-field">Thumbnail references<input name="reference_images" type="file" accept="image/png,image/jpeg,image/webp" multiple /><small>Up to 6 references. We use the visual direction, never copy the original.</small></label>
+        </div>
+      </section>
+      <section class="form-section">
         <h3>Creative direction</h3><p>Lock the promise, cast and visual energy before production starts.</p>
         <div class="form-grid">
           <label class="form-field">Video niche<select name="niche" required><option>Creator / challenge</option><option>Football / sports</option><option>Podcast</option><option>Business / finance</option><option>Crime / documentary</option><option>Education</option><option>Gaming</option><option>Other</option></select></label>
-          <label class="form-field">Concepts<select name="concepts_requested" id="conceptCount"><option value="1" ${credits < 2 ? "selected" : ""}>1 concept · 1 credit</option><option value="2" ${credits >= 2 ? "selected" : ""}>2 concepts · 2 credits</option><option value="3">3 concepts · 3 credits</option></select></label>
+          <label class="form-field">Concepts<select name="concepts_requested" id="conceptCount"><option value="1" ${credits < 2 ? "selected" : ""}>1 concept / 1 credit</option><option value="2" ${credits >= 2 ? "selected" : ""}>2 concepts / 2 credits</option><option value="3">3 concepts / 3 credits</option></select></label>
           <label class="form-field full">Core promise<input name="core_promise" required maxlength="300" /></label>
           <label class="form-field">People or elements allowed<textarea name="allowed_people" rows="4"></textarea></label>
           <label class="form-field">People or elements to exclude<textarea name="excluded_elements" rows="4"></textarea></label>
@@ -245,9 +259,9 @@ function renderBilling() {
     <div class="billing-grid">
       <section class="plan-panel">
         <p class="app-eyebrow" style="color:#e9afc1">Current plan</p>
-        <h2>${profile.plan[0].toUpperCase()}${profile.plan.slice(1)}</h2>
+        <h2>${profile.plan === "free" ? "Free trial" : `${profile.plan[0].toUpperCase()}${profile.plan.slice(1)}`}</h2>
         <div class="credit-number">${credits}</div>
-        <p>Monthly: ${profile.monthly_credits} · Rollover: ${profile.rollover_credits} · Top-up: ${profile.topup_credits}</p>
+        <p>Monthly: ${profile.monthly_credits} &middot; Rollover: ${profile.rollover_credits} &middot; Top-up: ${profile.topup_credits}</p>
         <p>${profile.renewal_at ? `Renews ${formatDate(profile.renewal_at)}` : "Choose a membership to activate monthly credits."}</p>
       </section>
       <section class="topup-panel">
@@ -258,7 +272,7 @@ function renderBilling() {
     </div>
     <section class="app-section">
       <div class="section-row"><h3>Credit and payment history</h3></div>
-      ${transactions.length ? `<div style="overflow:auto"><table class="invoice-table"><thead><tr><th>Date</th><th>Description</th><th>Credits</th><th>Amount</th></tr></thead><tbody>${transactions.map((transaction) => `<tr><td>${formatDate(transaction.created_at)}</td><td>${escapeHtml(transaction.description)}</td><td>${transaction.credit_delta > 0 ? "+" : ""}${transaction.credit_delta}</td><td>${transaction.amount_cents == null ? "—" : `${transaction.currency || "USD"} ${(transaction.amount_cents / 100).toFixed(2)}`}</td></tr>`).join("")}</tbody></table></div>` : `<div class="empty-state compact"><h3>No transactions yet</h3><p>Your subscription, top-ups and delivery deductions will appear here.</p></div>`}
+      ${transactions.length ? `<div style="overflow:auto"><table class="invoice-table"><thead><tr><th>Date</th><th>Description</th><th>Credits</th><th>Amount</th></tr></thead><tbody>${transactions.map((transaction) => `<tr><td>${formatDate(transaction.created_at)}</td><td>${escapeHtml(transaction.description)}</td><td>${transaction.credit_delta > 0 ? "+" : ""}${transaction.credit_delta}</td><td>${transaction.amount_cents == null ? "&mdash;" : `${transaction.currency || "USD"} ${(transaction.amount_cents / 100).toFixed(2)}`}</td></tr>`).join("")}</tbody></table></div>` : `<div class="empty-state compact"><h3>No transactions yet</h3><p>Your subscription, top-ups and delivery deductions will appear here.</p></div>`}
     </section>`;
 }
 
@@ -290,11 +304,13 @@ async function openProject(projectId) {
   const project = projects.find((item) => item.id === projectId);
   if (!project) return;
   const concepts = project.concepts || [];
+  const assets = project.project_assets || [];
   modal.innerHTML = `
     <div class="modal-card">
-      <div class="modal-head"><div>${statusBadge(project)}<h2 style="margin-top:8px">${escapeHtml(project.title)}</h2></div><button id="closeModal" type="button" aria-label="Close">×</button></div>
+      <div class="modal-head"><div>${statusBadge(project)}<h2 style="margin-top:8px">${escapeHtml(project.title)}</h2></div><button id="closeModal" type="button" aria-label="Close">&times;</button></div>
       <div class="modal-body">
         <p style="color:var(--muted)">${escapeHtml(project.core_promise)}</p>
+        ${assets.length ? `<div class="customer-assets"><p class="app-eyebrow">Your attached images</p><div>${assets.map((asset) => `<a href="${assetUrls.get(asset.storage_path)}" target="_blank" rel="noopener"><img src="${assetUrls.get(asset.storage_path)}" alt="${escapeHtml(asset.original_name)}" title="${escapeHtml(asset.original_name)}" /></a>`).join("")}</div></div>` : ""}
         ${concepts.length ? `<div class="concept-grid">${concepts.map((concept) => `<article class="concept ${concept.is_selected ? "selected" : ""}"><img src="${conceptUrls.get(concept.storage_path)}" alt="${escapeHtml(concept.label)}" /><div class="concept-footer"><strong>${escapeHtml(concept.label)}</strong><button class="text-button select-concept" data-concept="${concept.id}" type="button">${concept.is_selected ? "Selected" : "Select"}</button></div></article>`).join("")}</div><div class="modal-actions"><button class="app-button secondary" id="requestRevision" type="button">Request revision</button><button class="app-button primary" id="downloadConcept" type="button">Download selected</button></div>` : `<div class="empty-state"><h3>${project.status === "draft" ? "Draft brief" : "Production is underway"}</h3><p>${project.status === "draft" ? "Finish and submit this brief when ready." : "You will receive a notification as soon as reviewed concepts are ready."}</p></div>`}
       </div>
     </div>`;
@@ -369,6 +385,11 @@ function bindView() {
       if (availableCredits() < requested) return toast("Your current balance cannot cover this brief. Choose a plan or add credits.", "error");
       if (!values.get("video_url") && !values.get("script_text") && !values.get("source_file").size) return toast("Add a video link, script or source file.", "error");
       const file = values.get("source_file");
+      const subjectImages = values.getAll("subject_images").filter((item) => item.size);
+      const referenceImages = values.getAll("reference_images").filter((item) => item.size);
+      if (subjectImages.length > 8 || referenceImages.length > 6) return toast("Upload up to 8 subject images and 6 references.", "error");
+      if ([...subjectImages, ...referenceImages].some((item) => !["image/png", "image/jpeg", "image/webp"].includes(item.type))) return toast("Images must be PNG, JPG, or WebP files.", "error");
+      if ([...subjectImages, ...referenceImages].some((item) => item.size > 15 * 1024 * 1024)) return toast("Each image must be 15 MB or smaller.", "error");
       setLoading(button, true, "Submitting...");
       let sourcePath = null;
       if (file?.size) {
@@ -383,7 +404,7 @@ function bindView() {
           return toast(uploadError.message, "error");
         }
       }
-      const { error } = await supabase.from("projects").insert({
+      const { data: project, error } = await supabase.from("projects").insert({
         user_id: session.user.id,
         title: values.get("title"),
         video_url: values.get("video_url") || null,
@@ -397,9 +418,36 @@ function bindView() {
         reference_url: values.get("reference_url") || null,
         reference_notes: values.get("reference_notes") || null,
         status: "submitted",
-      });
+      }).select("id").single();
+      if (error) {
+        setLoading(button, false);
+        return toast(error.message, "error");
+      }
+
+      const imageGroups = [
+        ...subjectImages.map((image) => ({ image, kind: "subject_image" })),
+        ...referenceImages.map((image) => ({ image, kind: "reference_image" })),
+      ];
+      for (const { image, kind } of imageGroups) {
+        const storagePath = `${session.user.id}/${project.id}/${crypto.randomUUID()}-${image.name.replace(/[^a-zA-Z0-9._-]/g, "-")}`;
+        const { error: assetUploadError } = await supabase.storage.from("project-assets").upload(storagePath, image);
+        if (assetUploadError) {
+          setLoading(button, false);
+          return toast(`Brief saved, but ${image.name} could not upload. Open the project or contact support.`, "error");
+        }
+        const { error: assetRecordError } = await supabase.from("project_assets").insert({
+          project_id: project.id,
+          user_id: session.user.id,
+          kind,
+          storage_path: storagePath,
+          original_name: image.name,
+        });
+        if (assetRecordError) {
+          setLoading(button, false);
+          return toast(`Brief saved, but ${image.name} could not be attached.`, "error");
+        }
+      }
       setLoading(button, false);
-      if (error) return toast(error.message, "error");
       toast("Brief submitted successfully.", "success");
       await refresh("projects");
     });
