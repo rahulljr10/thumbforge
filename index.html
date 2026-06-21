@@ -25,7 +25,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=demo-1" />
+    <link rel="stylesheet" href="styles.css?v=production-2" />
   </head>
   <body>
     <header class="site-header">
@@ -37,10 +37,11 @@
         <a href="#work">Work</a>
         <a href="#difference">Why us</a>
         <a href="pricing.html">Pricing</a>
+        <a href="#gallery">Gallery</a>
         <a href="#faq">FAQ</a>
-        <a href="login.html">Demo Login</a>
+        <a href="login.html">Sign in</a>
       </nav>
-      <a class="nav-cta" href="login.html">Try Demo</a>
+      <a class="nav-cta" href="login.html?mode=signup">Get started</a>
     </header>
 
     <main>
@@ -53,8 +54,8 @@
             the real hook, correct people, and reason to click.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="pricing.html">Choose Your Plan</a>
-            <a class="button secondary" href="login.html">Try Interactive Demo</a>
+            <a class="button primary" href="login.html?mode=signup">Create Your Account</a>
+            <a class="button secondary" href="#gallery">Explore the Gallery</a>
           </div>
           <div class="trust-row" aria-label="Membership details">
             <span>No wasted credits</span>
@@ -218,6 +219,35 @@
         </div>
       </section>
 
+      <section id="gallery" class="gallery-section" aria-labelledby="gallery-title">
+        <div class="gallery-heading">
+          <div>
+            <p class="eyebrow">Built for the feed</p>
+            <h2 id="gallery-title">Every genre needs a different reason to click.</h2>
+          </div>
+          <p>Move through selected directions across sport, creator culture, documentary and challenge formats. Each concept starts with the source, not a copied template.</p>
+        </div>
+        <div class="gallery-stage">
+          <div class="gallery-rail gallery-rail-forward">
+            <button class="gallery-piece gallery-piece-wide" data-gallery-image="assets/sample-football.png" type="button"><img src="assets/sample-football.png" alt="International football thumbnail" /><span><b>Sports</b> Rivalry at a glance</span></button>
+            <button class="gallery-piece" data-gallery-image="assets/sample-documentary.png" type="button"><img src="assets/sample-documentary.png" alt="Crime documentary thumbnail" /><span><b>Documentary</b> Curiosity without clutter</span></button>
+            <button class="gallery-piece gallery-piece-wide" data-gallery-image="assets/sample-youtube-legends.png" type="button"><img src="assets/sample-youtube-legends.png" alt="Creator competition thumbnail" /><span><b>Creator culture</b> Scale and recognition</span></button>
+            <button class="gallery-piece" data-gallery-image="assets/sample-creator.png" type="button"><img src="assets/sample-creator.png" alt="Creator challenge thumbnail" /><span><b>Challenge</b> A visible transformation</span></button>
+            <button class="gallery-piece gallery-piece-wide" data-gallery-image="assets/sample-football.png" type="button" aria-hidden="true" tabindex="-1"><img src="assets/sample-football.png" alt="" /><span><b>Sports</b> Rivalry at a glance</span></button>
+            <button class="gallery-piece" data-gallery-image="assets/sample-documentary.png" type="button" aria-hidden="true" tabindex="-1"><img src="assets/sample-documentary.png" alt="" /><span><b>Documentary</b> Curiosity without clutter</span></button>
+          </div>
+          <div class="gallery-rail gallery-rail-reverse">
+            <button class="gallery-piece" data-gallery-image="assets/sample-creator.png" type="button"><img src="assets/sample-creator.png" alt="Creator transformation thumbnail" /><span><b>Transformation</b> Show the consequence</span></button>
+            <button class="gallery-piece gallery-piece-wide" data-gallery-image="assets/sample-youtube-legends.png" type="button"><img src="assets/sample-youtube-legends.png" alt="YouTube legends thumbnail" /><span><b>Competition</b> One definitive winner</span></button>
+            <button class="gallery-piece" data-gallery-image="assets/sample-documentary.png" type="button"><img src="assets/sample-documentary.png" alt="Investigative documentary thumbnail" /><span><b>Investigation</b> One unanswered question</span></button>
+            <button class="gallery-piece gallery-piece-wide" data-gallery-image="assets/sample-football.png" type="button"><img src="assets/sample-football.png" alt="World Cup football thumbnail" /><span><b>Events</b> National stakes</span></button>
+            <button class="gallery-piece" data-gallery-image="assets/sample-creator.png" type="button" aria-hidden="true" tabindex="-1"><img src="assets/sample-creator.png" alt="" /><span><b>Transformation</b> Show the consequence</span></button>
+            <button class="gallery-piece gallery-piece-wide" data-gallery-image="assets/sample-youtube-legends.png" type="button" aria-hidden="true" tabindex="-1"><img src="assets/sample-youtube-legends.png" alt="" /><span><b>Competition</b> One definitive winner</span></button>
+          </div>
+        </div>
+        <div class="gallery-note"><span>1280 × 720 delivery</span><span>Mobile readability checked</span><span>Original direction every time</span></div>
+      </section>
+
       <section id="faq" class="section faq-section">
         <div class="section-heading">
           <p class="eyebrow">Clear from day one</p>
@@ -254,7 +284,7 @@
       <section class="final-cta">
         <p class="eyebrow">Your video deserves a better first impression</p>
         <h2>Stop spending credits on guesses.</h2>
-        <a class="button primary" href="pricing.html">Choose Your Plan</a>
+        <a class="button primary" href="login.html?mode=signup">Create Your Account</a>
       </section>
     </main>
 
@@ -265,7 +295,10 @@
       </a>
       <span>Context first. Click second.</span>
       <a href="contact.html">Contact</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
     </footer>
-    <script src="script.js?v=20260620-4"></script>
+    <div class="gallery-lightbox" id="galleryLightbox" hidden><button type="button" aria-label="Close gallery">×</button><img src="" alt="Selected ThumbForge concept" /></div>
+    <script src="script.js?v=production-2"></script>
   </body>
 </html>

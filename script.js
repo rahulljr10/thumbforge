@@ -1,16 +1,3 @@
-const checkoutButtons = document.querySelectorAll(".checkout-button");
-
-checkoutButtons.forEach((checkoutButton) => {
-  const paymentLink = checkoutButton.dataset.paymentLink;
-
-  checkoutButton.addEventListener("click", (event) => {
-    if (!paymentLink || paymentLink === "#") {
-      event.preventDefault();
-      alert("Add your payment link first, then set its success URL to intake.html.");
-    }
-  });
-});
-
 const query = new URLSearchParams(window.location.search);
 const membershipPlan = document.querySelector("#membershipPlan");
 
@@ -43,9 +30,6 @@ document.querySelectorAll(".credit-step").forEach((button) => {
 creditInput?.addEventListener("input", updateTopup);
 updateTopup();
 
-const requestType = document.querySelector("#requestType");
-if (requestType && query.get("request") === "topup") requestType.value = "top-up";
-
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 if (!reduceMotion) {
@@ -71,4 +55,30 @@ if (!reduceMotion) {
 
   revealTargets.forEach((target) => revealObserver.observe(target));
 
+}
+
+const galleryLightbox = document.querySelector("#galleryLightbox");
+if (galleryLightbox) {
+  const galleryImage = galleryLightbox.querySelector("img");
+  const closeGallery = () => {
+    galleryLightbox.hidden = true;
+    galleryImage.src = "";
+    document.body.style.overflow = "";
+  };
+
+  document.querySelectorAll("[data-gallery-image]:not([aria-hidden='true'])").forEach((item) => {
+    item.addEventListener("click", () => {
+      galleryImage.src = item.dataset.galleryImage;
+      galleryLightbox.hidden = false;
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  galleryLightbox.querySelector("button").addEventListener("click", closeGallery);
+  galleryLightbox.addEventListener("click", (event) => {
+    if (event.target === galleryLightbox) closeGallery();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !galleryLightbox.hidden) closeGallery();
+  });
 }

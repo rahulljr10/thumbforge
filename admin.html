@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Production Console - ThumbForge</title>
+  <link rel="icon" href="assets/brand/favicon.ico" sizes="any" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="app.css?v=production-1" />
+</head>
+<body class="app-page admin-page">
+  <header class="admin-header">
+    <a class="app-brand" href="index.html"><img src="assets/brand/thumbforge-64.png" alt="" /><span>ThumbForge Production</span></a>
+    <div><a class="app-button secondary small" href="dashboard.html">Customer workspace</a><button class="app-button quiet small" id="adminSignOut" type="button">Sign out</button></div>
+  </header>
+  <main class="admin-main">
+    <section class="view-header"><div><p class="app-eyebrow">Operations</p><h1>Production queue</h1><p>Review briefs, upload concepts and manage delivery.</p></div><button class="app-button secondary" id="refreshAdmin" type="button">Refresh</button></section>
+    <div class="admin-stats" id="adminStats"></div>
+    <div class="project-toolbar"><input class="search-input" id="adminSearch" placeholder="Search title, creator or email" /><button class="filter-button active" data-admin-filter="active" type="button">Active</button><button class="filter-button" data-admin-filter="review" type="button">Review</button><button class="filter-button" data-admin-filter="delivered" type="button">Delivered</button><button class="filter-button" data-admin-filter="all" type="button">All</button></div>
+    <section id="adminQueue" class="admin-queue"><div class="loading-state">Loading production queue...</div></section>
+  </main>
+  <div id="appModal" class="app-modal" hidden></div>
+  <div id="appToast" class="app-toast" role="status" hidden></div>
+  <script type="module" src="admin.js?v=production-1"></script>
+</body>
+</html>
+

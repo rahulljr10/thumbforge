@@ -1,48 +1,49 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Member Dashboard - ThumbForge</title>
+  <title>Workspace - ThumbForge</title>
+  <meta name="robots" content="noindex" />
   <meta name="theme-color" content="#7a1633" />
   <link rel="icon" href="assets/brand/favicon.ico" sizes="any" />
-  <link rel="apple-touch-icon" href="assets/brand/thumbforge-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="app.css?v=demo-1" />
+  <link rel="stylesheet" href="app.css?v=production-1" />
 </head>
 <body class="app-page">
-  <div class="demo-banner"><strong>Interactive demo</strong><span>Changes stay only in this browser.</span><button id="resetDemo" type="button">Reset demo</button></div>
-  <div class="app-shell">
+  <div class="app-shell production-shell">
     <aside class="app-sidebar" id="appSidebar">
       <a class="app-brand" href="index.html"><img src="assets/brand/thumbforge-64.png" alt="" /><span>ThumbForge</span></a>
-      <nav class="app-nav" aria-label="Member navigation">
+      <nav class="app-nav" aria-label="Workspace navigation">
         <button class="nav-item active" data-view="home" type="button"><span class="nav-icon">⌂</span>Overview</button>
-        <button class="nav-item" data-view="projects" type="button"><span class="nav-icon">▣</span>Projects <span class="nav-count" id="projectCount">4</span></button>
+        <button class="nav-item" data-view="projects" type="button"><span class="nav-icon">▣</span>Projects <span class="nav-count" id="projectCount">0</span></button>
         <button class="nav-item" data-view="brief" type="button"><span class="nav-icon">＋</span>New brief</button>
         <button class="nav-item" data-view="billing" type="button"><span class="nav-icon">◇</span>Credits & billing</button>
         <button class="nav-item" data-view="settings" type="button"><span class="nav-icon">⚙</span>Channel settings</button>
       </nav>
       <div class="sidebar-plan">
-        <div><span>Pro plan</span><strong><b id="sideCredits">18</b> / 24 credits</strong></div>
+        <div><span id="sidePlan">Account</span><strong><b id="sideCredits">0</b> credits available</strong></div>
         <div class="credit-bar"><i id="sideCreditBar"></i></div>
-        <button class="text-button" data-view="billing" type="button">Manage credits</button>
+        <a class="text-button" href="pricing.html">View plans</a>
       </div>
-      <button class="logout-button" id="demoLogout" type="button">Sign out</button>
+      <button class="logout-button" id="signOutButton" type="button">Sign out</button>
     </aside>
-
     <main class="app-main">
       <header class="app-topbar">
         <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation">☰</button>
-        <div><p id="viewEyebrow">Member workspace</p><h1 id="viewTitle">Good morning, Alex</h1></div>
-        <div class="topbar-actions"><button class="icon-button" id="notificationButton" type="button" aria-label="Notifications">●<span class="notification-dot"></span></button><button class="profile-button" data-view="settings" type="button"><span>AC</span><div><strong>Alex Carter</strong><small>Creator Studio</small></div></button></div>
+        <div><p id="viewEyebrow">Creator workspace</p><h1 id="viewTitle">Loading workspace</h1></div>
+        <div class="topbar-actions">
+          <button class="icon-button" id="notificationButton" type="button" aria-label="Notifications">●<span class="notification-dot" hidden></span></button>
+          <button class="profile-button" data-view="settings" type="button"><span id="profileInitials">TF</span><div><strong id="profileName">ThumbForge member</strong><small id="profileChannel">Creator</small></div></button>
+        </div>
       </header>
-      <section id="appContent" class="app-content" aria-live="polite"></section>
+      <section id="appContent" class="app-content" aria-live="polite"><div class="loading-state">Loading your workspace...</div></section>
     </main>
   </div>
   <div id="appModal" class="app-modal" hidden></div>
   <div id="appToast" class="app-toast" role="status" hidden></div>
-  <script src="app.js?v=demo-1"></script>
+  <script type="module" src="app.js?v=production-1"></script>
 </body>
 </html>

@@ -1,47 +1,65 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Demo Login - ThumbForge</title>
+  <title>Sign in - ThumbForge</title>
+  <meta name="description" content="Sign in or create your ThumbForge account." />
   <meta name="theme-color" content="#7a1633" />
   <link rel="icon" href="assets/brand/favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="assets/brand/thumbforge-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="app.css?v=demo-1" />
+  <link rel="stylesheet" href="app.css?v=production-1" />
 </head>
 <body class="login-page">
   <main class="login-shell">
     <section class="login-visual">
       <a class="login-brand" href="index.html"><img src="assets/brand/thumbforge-logo.png" alt="" /><span>ThumbForge</span></a>
       <div class="login-message">
-        <p class="app-eyebrow">Interactive product demo</p>
-        <h1>See the complete member experience.</h1>
-        <p>Explore briefs, credit usage, thumbnail reviews, revisions, downloads, billing and account settings without making a payment.</p>
+        <p class="app-eyebrow">Creator workspace</p>
+        <h1>Turn the real video into the reason to click.</h1>
+        <p>Submit the source, follow production, review concepts and download YouTube-ready thumbnails from one workspace.</p>
       </div>
       <div class="login-preview" aria-hidden="true">
         <img src="assets/sample-football.png" alt="" />
-        <div><span>Delivered</span><strong>2 concepts ready</strong></div>
+        <div><span>Production workflow</span><strong>Context in. Concepts out.</strong></div>
       </div>
     </section>
     <section class="login-panel">
       <div class="login-card">
-        <p class="app-eyebrow">Demo account</p>
-        <h2>Welcome back</h2>
-        <p class="login-help">Use the demo details below or enter instantly.</p>
-        <form id="demoLoginForm">
-          <label>Email address<input id="demoEmail" type="email" value="demo@thumbforge.com" autocomplete="email" required /></label>
-          <label>Password<input id="demoPassword" type="password" value="demo123" autocomplete="current-password" required /></label>
-          <button class="app-button primary full" type="submit">Sign in to demo</button>
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-auth-view="signin" type="button">Sign in</button>
+          <button class="auth-tab" data-auth-view="signup" type="button">Create account</button>
+        </div>
+        <div id="authNotice" class="auth-notice" hidden></div>
+        <form id="signInForm">
+          <p class="app-eyebrow">Welcome back</p>
+          <h2>Sign in to ThumbForge</h2>
+          <label>Email address<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+          <button class="app-button primary full" type="submit">Sign in</button>
+          <button class="text-button auth-link" id="forgotPassword" type="button">Forgot password?</button>
         </form>
-        <button class="app-button quiet full" id="instantDemo" type="button">Enter without typing</button>
-        <p class="demo-note">Demo only. No payment or personal information is collected.</p>
-        <a class="back-link" href="index.html">Back to website</a>
+        <form id="signUpForm" hidden>
+          <p class="app-eyebrow">New account</p>
+          <h2>Create your workspace</h2>
+          <div class="auth-field-grid">
+            <label>Your name<input name="full_name" autocomplete="name" required /></label>
+            <label>Channel name<input name="channel_name" required /></label>
+          </div>
+          <label>Billing country<select name="country_code" required><option value="">Choose country</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="IN">India</option><option value="DE">Germany</option><option value="FR">France</option><option value="NL">Netherlands</option><option value="SG">Singapore</option><option value="OTHER">Other</option></select></label>
+          <label>Email address<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Password<input name="password" type="password" minlength="8" autocomplete="new-password" required /></label>
+          <label class="checkbox-label"><input name="terms" type="checkbox" required /><span>I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</span></label>
+          <button class="app-button primary full" type="submit">Create account</button>
+        </form>
+        <p class="auth-footnote">Secure account access powered by Supabase authentication.</p>
+        <a class="back-link" href="index.html">Back to ThumbForge</a>
       </div>
     </section>
   </main>
-  <script src="app.js?v=demo-1"></script>
+  <script type="module" src="auth.js?v=production-1"></script>
 </body>
 </html>
